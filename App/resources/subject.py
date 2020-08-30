@@ -43,8 +43,8 @@ class SubjectList(Resource):
                 subject_resp_out = []
                 for subject in subjects:
                     subject_resp_in = subject.json()
-                    subject_name = subject.subject_name
-                    data1 = {'subject_name': subject_name}
+                    subject_id = subject.id
+                    data1 = {'subject_id': subject_id}
                     categories = AssessmentCategoryModel.find_assessment_category_by_any(**data1)
                     category_resp_out = []
                     for category in categories:

@@ -28,21 +28,20 @@ class StudentModel(db.Model):
                 'dob', 'class_std', 'father_name',
                 'father_occupation', 'mother_name',
                 'mother_occupation', 'contact', 'isactive',
-                'register_date', 'modified_date', 'modified_by']
+                'register_date', 'modified_date', 'modified_by', 'kalika_kendra_id', 'cluster_id']
         for col in cols:
             setattr(self, col, None)
         for col in kwargs.keys():
             if col in cols:
                 setattr(self, col, kwargs[col])
-        if not kalika_kendra:
-            return {
-                       "message": f"Kalika Kendra name not found for the student"}, 401
-        cluster = ClusterModel.find_by_cluster_name(kwargs['cluster_name'])
-        if not cluster:
-            return {"message": f"Cluster name not found for the student"}, 401
-        print(cluster.json())
-        self.kalika_kendra_id = kalika_kendra.id
-        self.cluster_id = cluster.id
+        if kwargs.get('kalika_kendra_name'):
+            kalika_kendra = KalikaKendraModel.find_by_kalika_kendra_name(kwargs['kalika_kendra_name'])
+            if kalika_kendra:
+                self.kalika_kendra_id = kalika_kendra.id
+        if kwargs.get('cluster_name'):
+            cluster = ClusterModel.find_by_cluster_name(kwargs['cluster_name'])
+            if cluster:
+                self.cluster_id = cluster.id
         return None
 
     def json(self):
@@ -239,6 +238,7 @@ class StudentModel(db.Model):
             self.kalika_kendra_id = cluster.id
 
     def save_to_db(self):
+        print(self.json())
         db.session.add(self)
         db.session.commit()
         return self
