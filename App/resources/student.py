@@ -124,7 +124,9 @@ class Student(Resource):
         data["modified_date"] = dt
         data["modified_by"] = claims["email"]
         try:
+            print(data)
             student = StudentModel(**data)
+            print(student.json())
             student.save_to_db()
         except Exception as ex:
             return {"message": f"Error saving student data. {repr(ex)}"}, 403
