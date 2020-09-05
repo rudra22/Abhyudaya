@@ -101,6 +101,9 @@ class User(Resource):
     @jwt_required
     def put(self):
         data = _user_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         email = data["email"]
         claims = get_jwt_claims()
         user_email = claims['email']

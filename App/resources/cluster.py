@@ -93,6 +93,9 @@ class Cluster(Resource):
         if not claims['is_admin']:
             return {'message': 'Admin privilege required.'}, 401
         data = _cluster_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         cluster_name = data["cluster_name"]
         cluster = ClusterModel.find_by_cluster_name(cluster_name)
         if cluster:

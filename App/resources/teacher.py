@@ -94,6 +94,9 @@ class Teacher(Resource):
         if not claims['is_admin']:
             return {'message': 'Admin privilege required.'}, 401
         data = _teacher_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         teacher_id = data.get("teacher_id")
         teacher_name = data.get("teacher_name")
         teacher_code = data.get("teacher_code")

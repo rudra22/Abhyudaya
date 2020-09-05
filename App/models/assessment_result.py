@@ -42,25 +42,32 @@ class AssessmentResultModel(db.Model):
         return None
 
     def json(self):
+        student = StudentModel.find_by_student_id(self.student_id)
+        cluster = ClusterModel.find_by_cluster_id(student.cluster_id)
+        kalika_kendra = KalikaKendraModel.find_by_kalika_kendra_id(student.kalika_kendra_id)
         return {'result_id': self.id, 'attempt_id': self.attempt_id,
                 'student_id': self.student_id,
-                'student_name': StudentModel.find_by_student_id(self.student_id).student_name,
+                'student_name': student.student_name if student else None,
+                'cluster_id': cluster.id if cluster else None,
+                'cluster_name': cluster.cluster_name if cluster else None,
+                'kalika_kendra_id': kalika_kendra.id if kalika_kendra else None,
+                'kalika_kendra_id': kalika_kendra.kalika_kendra_name if kalika_kendra else None,
                 'subject_id': self.subject_id,
                 'subject_name':
                     SubjectModel.find_by_subject_id(self.subject_id).subject_name,
-                'category_id': self.category_id,
-                'category_name': AssessmentCategoryModel.find_by_category_id(
+                'assessment_category_id': self.category_id,
+                'assessment_category_name': AssessmentCategoryModel.find_by_category_id(
                     self.category_id).category_name,
-                'skill_id': self.skill_id,
-                'skill_name': AssessmentSkillModel.find_by_skill_id(self.skill_id).skill_name,
-                'period_id': self.period_id,
-                'year': self.year,
-                'month': self.month,
-                'day': self.day,
-                'session': self.session,
-                'score': self.score,
-                'full_score': self.full_score,
-                'grade': self.grade,
+                'assessment_skill_id': self.skill_id,
+                'assessment_skill_name': AssessmentSkillModel.find_by_skill_id(self.skill_id).skill_name if AssessmentSkillModel.find_by_skill_id(self.skill_id) else None,
+                'assessment_period_id': self.period_id,
+                'assessment_year': self.year,
+                'assessment_month': self.month,
+                'assessment_day': self.day,
+                'assessment_session': self.session,
+                'assessment_score': self.score,
+                'assessment_full_score': self.full_score,
+                'assessment_grade': self.grade,
                 'creation_date': str(self.creation_date),
                 'modified_date': str(self.modified_date),
                 'modified_by': self.modified_by}
@@ -80,9 +87,9 @@ class AssessmentResultModel(db.Model):
 
     @classmethod
     def find_assessment_result_by_any(cls, **kwargs):
-        cols = ['attempt_id', 'student_id', 'subject_id', 'category_id',
-                'skill_id', 'period_id', 'year', 'month', 'day', 'session',
-                'score', 'full_score', 'grade', 'creation_date',
+        cols = ['attempt_id', 'student_id', 'subject_id', 'assessment_category_id',
+                'assessment_skill_id', 'assessment_period_id', 'assessment_year', 'assessment_month', 'assessment_day', 'assessment_session',
+                'assessment_score', 'assessment_full_score', 'assessment_grade', 'creation_date',
                 'modified_date', 'modified_by']
         filter_str = 'cls.query'
         if 'result_id' in kwargs.keys():
@@ -97,36 +104,36 @@ class AssessmentResultModel(db.Model):
         if 'subject_id' in kwargs.keys():
             filter_str = filter_str + '.filter_by(subject_id="' + str(
                 kwargs['subject_id']) + '")'
-        if 'category_id' in kwargs.keys():
+        if 'assessment_category_id' in kwargs.keys():
             filter_str = filter_str + '.filter_by(category_id="' + str(
-                kwargs['category_id']) + '")'
-        if 'skill_id' in kwargs.keys():
+                kwargs['assessment_category_id']) + '")'
+        if 'assessment_skill_id' in kwargs.keys():
             filter_str = filter_str + '.filter_by(skill_id="' + str(
-                kwargs['skill_id']) + '")'
-        if 'period_id' in kwargs.keys():
+                kwargs['assessment_skill_id']) + '")'
+        if 'assessment_period_id' in kwargs.keys():
             filter_str = filter_str + '.filter_by(period_id="' + str(
-                kwargs['period_id']) + '")'
-        if 'year' in kwargs.keys():
+                kwargs['assessment_period_id']) + '")'
+        if 'assessment_year' in kwargs.keys():
             filter_str = filter_str + '.filter_by(year="' + str(
-                kwargs['year']) + '")'
-        if 'month' in kwargs.keys():
+                kwargs['assessment_year']) + '")'
+        if 'assessment_month' in kwargs.keys():
             filter_str = filter_str + '.filter_by(month="' + str(
-                kwargs['month']) + '")'
-        if 'day' in kwargs.keys():
+                kwargs['assessment_month']) + '")'
+        if 'assessment_day' in kwargs.keys():
             filter_str = filter_str + '.filter_by(day="' + str(
-                kwargs['day']) + '")'
-        if 'session' in kwargs.keys():
+                kwargs['assessment_day']) + '")'
+        if 'assessment_session' in kwargs.keys():
             filter_str = filter_str + '.filter_by(session="' + str(
-                kwargs['session']) + '")'
-        if 'score' in kwargs.keys():
+                kwargs['assessment_session']) + '")'
+        if 'assessment_score' in kwargs.keys():
             filter_str = filter_str + '.filter_by(score="' + str(
-                kwargs['score']) + '")'
-        if 'full_score' in kwargs.keys():
+                kwargs['assessment_score']) + '")'
+        if 'assessment_full_score' in kwargs.keys():
             filter_str = filter_str + '.filter_by(full_score="' + str(
-                kwargs['full_score']) + '")'
-        if 'grade' in kwargs.keys():
+                kwargs['assessment_full_score']) + '")'
+        if 'assessment_grade' in kwargs.keys():
             filter_str = filter_str + '.filter_by(grade="' + str(
-                kwargs['grade']) + '")'
+                kwargs['assessment_grade']) + '")'
         if 'creation_date' in kwargs.keys():
             filter_str = filter_str + '.filter_by(creation_date="' + str(
                 kwargs['creation_date']) + '")'
@@ -142,8 +149,8 @@ class AssessmentResultModel(db.Model):
                 subject_id = subject.id
                 filter_str = filter_str + '.filter_by(subject_id="'\
                              + str(subject_id) + '")'
-        if 'category_name' in kwargs.keys():
-            assessment_category = AssessmentCategoryModel.find_assessment_category_name(kwargs['category_name'])
+        if 'assessment_category_name' in kwargs.keys():
+            assessment_category = AssessmentCategoryModel.find_by_category_name(kwargs['assessment_category_name'])
             if assessment_category:
                 category_id = assessment_category.id
                 filter_str = filter_str + '.filter_by(category_id="' + str(category_id) + '")'
@@ -153,8 +160,8 @@ class AssessmentResultModel(db.Model):
                 student_id = student.id
                 filter_str = filter_str + '.filter_by(student_id="' + str(
                     student_id) + '")'
-        if 'skill_name' in kwargs.keys():
-            skill = AssessmentSkillModel.find_by_skill_name(kwargs['skill_name'])
+        if 'assessment_skill_name' in kwargs.keys():
+            skill = AssessmentSkillModel.find_by_skill_name(kwargs['assessment_skill_name'])
             if skill:
                 skill_id = skill.id
                 filter_str = filter_str + '.filter_by(skill_id="' + str(skill_id) + '")'
@@ -175,8 +182,8 @@ class AssessmentResultModel(db.Model):
             subjects = SubjectModel.find_by_subject_name(payload["subject_name"])
             if subjects:
                 self.subject_id = subjects[0].id
-        if 'category_name' in payload.keys():
-            data = {'category_name': payload["category_name"]}
+        if 'assessment_category_name' in payload.keys():
+            data = {'category_name': payload["assessment_category_name"]}
             assessment_categories = AssessmentCategoryModel.find_assessment_category_by_any(
                 **data)
             if assessment_categories:

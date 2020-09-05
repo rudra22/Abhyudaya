@@ -24,10 +24,6 @@ _user_role_parser.add_argument('role_name', required=False, type=str,
                                store_missing=False)
 _user_role_parser.add_argument('role_desc', required=False, type=str,
                                store_missing=False)
-# _user_role_parser.add_argument('organization_id', required=False, type=int,
-#                                store_missing=False)
-# _user_role_parser.add_argument('organization_name', required=False, type=str,
-#                                store_missing=False)
 _user_role_parser.add_argument('isactive', type=str, store_missing=False,
                                help="If depricated flag. Default 0.")
 
@@ -40,27 +36,15 @@ class UserRole(Resource):
             return {'message': 'User not authorized to view'}
         try:
             data = request.args
-            # data = _user_role_parser.parse_args()
-            # organization_name = data.get("organization_name")
-            # organization_id = data.get("organization_id")
             role_id = data.get("role_id")
             role_desc = data.get("role_desc")
             role_name = data.get("role_name")
-            # isactive = data.get("isactive")
             if role_id:
                 roles = UserRoleModel.find_by_role_id(role_id)
-            # elif role_name and organization_name:
-            #     roles = UserRoleModel.find_by_role_name_organization_name(role_name, organization_name)
-            # elif role_name and organization_id:
-            #     roles = UserRoleModel.find_by_role_name_organization_id(role_name, organization_id)
             elif role_name:
                 roles = UserRoleModel.find_by_role_name(role_name)
             elif role_desc:
                 roles = UserRoleModel.find_by_role_desc(role_desc)
-            # elif organization_id:
-            #     roles = UserRoleModel.find_by_organization_id(organization_id)
-            # elif organization_name:
-            #     roles = UserRoleModel.find_by_organization_name(organization_name)
             else:
                 roles = UserRoleModel.find_all()
         except:
@@ -80,7 +64,6 @@ class UserRole(Resource):
             return {'message': 'Super Admin privilege required.'}, 412
         data = _user_role_parser.parse_args()
         try:
-        #     organization_name = data["organization_name"]
             role_name = data["role_name"]
         except Exception as e:
             return {'message': f"Role name missing. {repr(e)}"}
@@ -104,7 +87,6 @@ class UserRole(Resource):
         data = _user_role_parser.parse_args()
         try:
             role_name = data["role_name"]
-            # organization_name = data["organization_name"]
         except Exception as e:
             return {"message": f"Role name missing."}
         user_role = UserRoleModel.find_by_role_name(role_name)[0]
@@ -119,8 +101,10 @@ class UserRole(Resource):
         if not claims['is_super_admin']:
             return {'message': 'Super Admin privilege required.'}, 412
         data = _user_role_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         try:
-            # organization_name = data["organization_name"]
             role_name = data["role_name"]
         except Exception as e:
             return {"message": f"Role name required. {repr(e)}"}

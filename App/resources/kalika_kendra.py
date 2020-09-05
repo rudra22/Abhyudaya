@@ -116,6 +116,9 @@ class KalikaKendra(Resource):
         if not claims['is_admin']:
             return {'message': 'Admin privilege required.'}, 401
         data = _kalika_kendra_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         kalika_kendra_name = data["kalika_kendra_name"]
         kalika_kendra = KalikaKendraModel.find_by_kalika_kendra_name(kalika_kendra_name)
         if kalika_kendra:

@@ -106,6 +106,9 @@ class Organization(Resource):
         if not claims['is_super_admin']:
             return {'message': 'Super Admin privilege required.'}, 412
         data = _organization_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         try:
             organization_name = data["organization_name"]
         except Exception as e:

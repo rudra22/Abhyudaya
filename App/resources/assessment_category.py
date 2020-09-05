@@ -103,6 +103,9 @@ class AssessmentCategory(Resource):
         if not claims['is_admin']:
             return {'message': 'Admin privilege required.'}, 401
         data = _assessment_category_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         try:
             assessment_category_id = data["category_id"]
             assessment_category = AssessmentCategoryModel.find_by_category_id(assessment_category_id)
