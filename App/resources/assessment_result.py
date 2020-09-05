@@ -30,25 +30,25 @@ _assessment_result_parser.add_argument('subject_id', type=int,
                                        store_missing=False)
 _assessment_result_parser.add_argument('subject_name', type=str,
                                        store_missing=False)
-_assessment_result_parser.add_argument('category_id', type=int,
+_assessment_result_parser.add_argument('assessment_category_id', type=int,
                                        store_missing=False)
-_assessment_result_parser.add_argument('category_name', type=str,
+_assessment_result_parser.add_argument('assessment_category_name', type=str,
                                        store_missing=False)
-_assessment_result_parser.add_argument('skill_id', type=int,
+_assessment_result_parser.add_argument('assessment_skill_id', type=int,
                                        store_missing=False)
-_assessment_result_parser.add_argument('skill_name', type=str,
+_assessment_result_parser.add_argument('assessment_skill_name', type=str,
                                        store_missing=False)
-_assessment_result_parser.add_argument('period_id', type=int,
+_assessment_result_parser.add_argument('assessment_period_id', type=int,
                                        store_missing=False)
-_assessment_result_parser.add_argument('year', type=int, store_missing=False)
-_assessment_result_parser.add_argument('month', type=int, store_missing=False)
-_assessment_result_parser.add_argument('day', type=int, store_missing=False)
-_assessment_result_parser.add_argument('session', type=str,
+_assessment_result_parser.add_argument('assessment_year', type=int, store_missing=False)
+_assessment_result_parser.add_argument('assessment_month', type=int, store_missing=False)
+_assessment_result_parser.add_argument('assessment_day', type=int, store_missing=False)
+_assessment_result_parser.add_argument('assessment_session', type=str,
                                        store_missing=False)
-_assessment_result_parser.add_argument('score', type=int, store_missing=False)
-_assessment_result_parser.add_argument('full_score', type=str,
+_assessment_result_parser.add_argument('assessment_score', type=int, store_missing=False)
+_assessment_result_parser.add_argument('assessment_full_score', type=str,
                                        store_missing=False)
-_assessment_result_parser.add_argument('grade', type=str, store_missing=False)
+_assessment_result_parser.add_argument('assessment_grade', type=str, store_missing=False)
 _assessment_result_parser.add_argument('creation_date', type=str,
                                        store_missing=False)
 _assessment_result_parser.add_argument('modified_date', type=str,
@@ -56,11 +56,19 @@ _assessment_result_parser.add_argument('modified_date', type=str,
 _assessment_result_parser.add_argument('modified_by', type=str,
                                        store_missing=False)
 
+def remove_assessment_from_dict(data):
+    for key in data.keys():
+        if str(key).startswith("assessment_"):
+            new_key = key[len("assessment_"):]
+            data[new_key] = data.pop(key)
+    return data
+
 class AssessmentResultList(Resource):
 
     @jwt_required
     def get(self):
         data = request.args
+        data = remove_assessment_from_dict(dict(data))
         results = AssessmentResultModel.find_assessment_result_by_any(**data)
         if results:
             resp = []
@@ -70,13 +78,13 @@ class AssessmentResultList(Resource):
         else:
             return {'message': 'Results not found'}, 404
 
-
 class AssessmentResult(Resource):
+
     @jwt_required
     def get(self):
         data = request.args
         print(data)
-        print(data.keys())
+        data = remove_assessment_from_dict(dict(data))
         if 'result_id' in data.keys():
             assessment_result = AssessmentResultModel.find_by_result_id(
                 data['result_id'])
@@ -88,6 +96,7 @@ class AssessmentResult(Resource):
     @jwt_required
     def post(self):
         data = _assessment_result_parser.parse_args()
+        data = remove_assessment_from_dict(data)
         assessment_results = AssessmentResultModel.find_assessment_result_by_any(
             **data)
         if assessment_results:
@@ -115,9 +124,10 @@ class AssessmentResult(Resource):
     @jwt_required
     def delete(self):
         claims = get_jwt_claims()
-        if not claims['is_admin']:
-            return {'message': 'Admin privilege required.'}, 401
+        # if not claims['is_admin']:
+        #     return {'message': 'Admin privilege required.'}, 401
         data = _assessment_result_parser.parse_args()
+        data = remove_assessment_from_dict(data)
         assessment_results = AssessmentResultModel.find_assessment_result_by_any(
             **data)
         if assessment_results:
@@ -133,6 +143,7 @@ class AssessmentResult(Resource):
         # if not claims['is_admin']:
         #     return {'message': 'Admin privilege required.'}, 401
         data = _assessment_result_parser.parse_args()
+        data = remove_assessment_from_dict(data)
         for key in data.keys():
             if str(data[key]).lower() in ('none', 'null', ''):
                 data[key] = None
