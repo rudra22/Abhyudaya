@@ -88,6 +88,9 @@ class AssessmentPeriod(Resource):
         if not claims['is_admin']:
             return {'message': 'Admin privilege required.'}, 401
         data = _assessment_period_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         try:
             assessment_period_id = data["assessment_period_id"]
             assessment_period = AssessmentPeriodModel.find_by_assessment_period_id(assessment_period_id)

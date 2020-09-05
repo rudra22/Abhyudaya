@@ -68,15 +68,13 @@ class AssessmentResultList(Resource):
                 resp.append(result.json())
             return resp
         else:
-            {'message': 'Results not found'}, 404
+            return {'message': 'Results not found'}, 404
 
 
 class AssessmentResult(Resource):
     @jwt_required
     def get(self):
         data = request.args
-        # data = data.to_dict(flat=False)
-        # data = _assessment_result_parser.parse_args()
         print(data)
         print(data.keys())
         if 'result_id' in data.keys():
@@ -86,85 +84,6 @@ class AssessmentResult(Resource):
                 return assessment_result.json()
             else:
                 return {'message': "Assessment result id not found"}, 404
-        #
-        #
-        # student_ids = []
-        # if 'kalika_kendra_id' in data.keys():
-        #     try:
-        #         students = StudentModel.find_by_student_kalika_kendra_id(data["kalika_kendra_id"])
-        #         if students:
-        #             for student in students:
-        #                 student_ids.append(student.id)
-        #         print(student_ids)
-        #     except:
-        #         return {'message': 'No students found'}, 404
-        # elif 'cluster_id' in data.keys():
-        #     try:
-        #         students = StudentModel.find_by_student_cluster_id(data["cluster_id"])
-        #         if students:
-        #             for student in students:
-        #                 student_ids.append(student.id)
-        #         print(student_ids)
-        #     except:
-        #         return {'message': 'No students found'}, 404
-        # elif 'kalika_kendra_name' in data.keys():
-        #     try:
-        #         students = StudentModel.find_by_student_kalika_kendra_name(
-        #             data["kalika_kendra_name"])
-        #         if students:
-        #             for student in students:
-        #                 student_ids.append(student.id)
-        #         print(student_ids)
-        #     except:
-        #         return {'message': 'No students found'}, 404
-        # elif 'cluster_name' in data.keys():
-        #     try:
-        #         students = StudentModel.find_by_student_cluster_name(
-        #             data["cluster_name"])
-        #         if students:
-        #             for student in students:
-        #                 student_ids.append(student.id)
-        #         print(student_ids)
-        #     except:
-        #         return {'message': 'No students found'}, 404
-        #
-        # if student_ids:
-        #     assessment_result = AssessmentResultModel.find_by_student_ids(
-        #         student_ids)
-        #     if assessment_result:
-        #         return assessment_result.json()
-        #     else:
-        #         return {'message': "Assessment result not found"}, 404
-        #
-        # if 'subject_name' in data.keys() or 'student_name' in data.keys() or 'category_name' in data.keys() or 'skill_name' in data.keys():
-        #     payload = {}
-        #     if 'subject_name' in data.keys():
-        #         payload['subject_name'] = data['subject_name']
-        #     if 'student_name' in data.keys():
-        #         payload['student_name'] = data['student_name']
-        #     if 'category_name' in data.keys():
-        #         payload['category_name'] = data['category_name']
-        #     if 'skill_name' in data.keys():
-        #         payload['skill_name'] = data['skill_name']
-        #     assessment_results = AssessmentResultModel.find_assessment_result_by_any_name(
-        #         **payload)
-        #     if assessment_results:
-        #         resp = []
-        #         for result in assessment_results:
-        #             resp.append(result.json())
-        #         return resp, 200
-        #     else:
-        #         return {'message': 'No result found for the input'}, 404
-        # else:
-        #     # print(data)
-        #     assessment_results = AssessmentResultModel.find_assessment_result_by_any(
-        #         **data)
-        #     if assessment_results:
-        #         resp = []
-        #         for result in assessment_results:
-        #             resp.append(result.json())
-        #         return resp, 200
-        #     return {'message': 'Assessment result not found'}, 404
 
     @jwt_required
     def post(self):
@@ -211,9 +130,12 @@ class AssessmentResult(Resource):
     @jwt_required
     def put(self):
         claims = get_jwt_claims()
-        if not claims['is_admin']:
-            return {'message': 'Admin privilege required.'}, 401
+        # if not claims['is_admin']:
+        #     return {'message': 'Admin privilege required.'}, 401
         data = _assessment_result_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         try:
             assessment_result_id = data["result_id"]
             assessment_result = AssessmentResultModel.find_by_result_id(
@@ -226,5 +148,4 @@ class AssessmentResult(Resource):
                 assessment_result.save_to_db()
             return assessment_result.json()
         except Exception as e:
-            return {
-                       'message': f"Assesment result could not be found. {repr(e)}"}, 404
+            return {'message': f"Assesment result could not be found. {repr(e)}"}, 404

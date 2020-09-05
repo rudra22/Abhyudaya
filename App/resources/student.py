@@ -159,6 +159,9 @@ class Student(Resource):
     def put(self):
         claims = get_jwt_claims()
         data = _student_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         dt = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
         data["modified_date"] = dt
         data["modified_by"] = claims["email"]

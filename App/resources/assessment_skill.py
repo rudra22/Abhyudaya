@@ -123,6 +123,9 @@ class AssessmentSkill(Resource):
         if not claims['is_admin']:
             return {'message': 'Admin privilege required.'}, 401
         data = _assessment_skill_parser.parse_args()
+        for key in data.keys():
+            if str(data[key]).lower() in ('none', 'null', ''):
+                data[key] = None
         try:
             assessment_skill_id = data["skill_id"]
             assessment_skill = AssessmentSkillModel.find_by_skill_id(
