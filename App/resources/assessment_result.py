@@ -56,7 +56,7 @@ _assessment_result_parser.add_argument('modified_date', type=str,
 _assessment_result_parser.add_argument('modified_by', type=str,
                                        store_missing=False)
 
-def remove_assessment_from_dict(data):
+def remove_assessment_from_dict_key(data):
     for key in data.keys():
         if str(key).startswith("assessment_"):
             new_key = key[len("assessment_"):]
@@ -68,7 +68,8 @@ class AssessmentResultList(Resource):
     @jwt_required
     def get(self):
         data = request.args
-        data = remove_assessment_from_dict(dict(data))
+        data = remove_assessment_from_dict_key(dict(data))
+        print(data)
         results = AssessmentResultModel.find_assessment_result_by_any(**data)
         if results:
             resp = []
@@ -84,7 +85,7 @@ class AssessmentResult(Resource):
     def get(self):
         data = request.args
         print(data)
-        data = remove_assessment_from_dict(dict(data))
+        data = remove_assessment_from_dict_key(dict(data))
         if 'result_id' in data.keys():
             assessment_result = AssessmentResultModel.find_by_result_id(
                 data['result_id'])
@@ -96,7 +97,7 @@ class AssessmentResult(Resource):
     @jwt_required
     def post(self):
         data = _assessment_result_parser.parse_args()
-        data = remove_assessment_from_dict(data)
+        data = remove_assessment_from_dict_key(data)
         assessment_results = AssessmentResultModel.find_assessment_result_by_any(
             **data)
         if assessment_results:
@@ -127,7 +128,7 @@ class AssessmentResult(Resource):
         # if not claims['is_admin']:
         #     return {'message': 'Admin privilege required.'}, 401
         data = _assessment_result_parser.parse_args()
-        data = remove_assessment_from_dict(data)
+        data = remove_assessment_from_dict_key(data)
         assessment_results = AssessmentResultModel.find_assessment_result_by_any(
             **data)
         if assessment_results:
@@ -143,7 +144,7 @@ class AssessmentResult(Resource):
         # if not claims['is_admin']:
         #     return {'message': 'Admin privilege required.'}, 401
         data = _assessment_result_parser.parse_args()
-        data = remove_assessment_from_dict(data)
+        data = remove_assessment_from_dict_key(data)
         for key in data.keys():
             if str(data[key]).lower() in ('none', 'null', ''):
                 data[key] = None
