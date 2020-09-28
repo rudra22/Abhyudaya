@@ -97,7 +97,9 @@ class AssessmentResult(Resource):
     @jwt_required
     def post(self):
         data = _assessment_result_parser.parse_args()
+        print(data)
         data = remove_assessment_from_dict_key(data)
+        print(data)
         assessment_results = AssessmentResultModel.find_assessment_result_by_any(
             **data)
         if assessment_results:

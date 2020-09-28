@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "7d382f27-4f55-4a64-aa46-518779fde350",
-		"name": "ProBonoNew",
+		"name": "Abhyudaya",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -37,7 +37,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n   \"email\": \"rudra22@gmail.com\",\r\n   \"password\": \"rudra123\",\r\n   \"first_name\": \"Rudra\",\r\n   \"last_name\": \"Ghosh\",\r\n   \"gender\": \"male\",\r\n   \"user_role_id\":1\r\n}\r\n",
+					"raw": "{    \r\n   \"email\": \"volunteer10@gmail.com\",\r\n   \"password\": \"volunteer10\",\r\n   \"first_name\": \"V_fname\",\r\n   \"last_name\": \"V_lname\",\r\n   \"gender\": \"male\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -90,7 +90,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{    \r\n   \"email\": \"rudra22@gmail.com\",\r\n   \"password\": \"rudra123\"\r\n}\r\n",
+					"raw": "{    \r\n   \"email\": \"volunteer10@gmail.com\",\r\n   \"password\": \"volunteer10\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -128,7 +128,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:5000/user?email=rudra22@gmail.com",
+					"raw": "http://localhost:5000/user?email=volunteer10@gmail.com",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -140,12 +140,7 @@
 					"query": [
 						{
 							"key": "email",
-							"value": "rudra22@gmail.com"
-						},
-						{
-							"key": "all",
-							"value": "1",
-							"disabled": true
+							"value": "volunteer10@gmail.com"
 						}
 					]
 				}
@@ -216,7 +211,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"password\": \"pass123\",\r\n    \"email\": \"udraar@gmail.com\",\r\n    \"first_name\": \"Rudra\",\r\n    \"last_name\": \"Ghosh\",\r\n    \"gender\": \"male\",\r\n    \"designation\": \"Volunteer\"\r\n}"
+					"raw": "{\r\n    \"password\": \"teacher1\",\r\n    \"email\": \"teacher1@gmail.com\",\r\n    \"first_name\": \"teacher1\",\r\n    \"last_name\": \"tt\",\r\n    \"gender\": \"female\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/user",
@@ -250,7 +245,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"password\": \"pass1234\",\r\n    \"email\": \"udraar@gmail.com\",\r\n    \"first_name\": \"Rudra\",\r\n    \"last_name\": \"Ghosh\",\r\n    \"gender\": \"male\",\r\n    \"designation\": \"Volunteer\"\r\n}"
+					"raw": "{    \r\n    \"email\": \"volunteer10@gmail.com\",\r\n    \"user_role_id\": \"3\",\r\n    \"gender\": \"male\",\r\n    \"teacher_code\": \"19ANK0100\",\r\n    \"other_param\": \"val1\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/user",
@@ -723,7 +718,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:5000/student?teacher_code=16JNA007",
+					"raw": "http://localhost:5000/student?student_name=Redd Dufoure",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -750,7 +745,12 @@
 						},
 						{
 							"key": "teacher_code",
-							"value": "16JNA007"
+							"value": "10VBN002",
+							"disabled": true
+						},
+						{
+							"key": "student_name",
+							"value": "Redd Dufoure"
 						}
 					]
 				}
@@ -869,7 +869,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"student_id\": 17,\r\n    \"student_name\": \"Rudra Ghosh\",\r\n    \"kalika_kendra_name\": \"ANEKAL 1\",\r\n    \"cluster_name\": \"Anekal\",\r\n    \"gender\": \"male\",\r\n    \"aadhar\": 123,\r\n    \"class_std\": \"12\"\r\n}"
+					"raw": "{\r\n    \"aadhar\": \"126-87-9296\",\r\n    \"student_name\": \"Rudra Ghosh\",\r\n    \"kalika_kendra_name\": \"ANEKAL 1\",\r\n    \"cluster_name\": \"Anekal\",\r\n    \"gender\": \"male\",\r\n    \"class_std\": \"12\",\r\n    \"register_date\": \"2019-10-03 00:00:00\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/student",
@@ -903,7 +903,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"aadhar\": 123\r\n}"
+					"raw": "{\r\n    \"aadhar\": \"126-87-9296\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/student",
@@ -936,7 +936,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:5000/teacher?teacher_code=19SRK087",
+					"raw": "http://localhost:5000/teacher?teacher_name=Rudra Ghosh",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -947,8 +947,8 @@
 					],
 					"query": [
 						{
-							"key": "teacher_code",
-							"value": "19SRK087"
+							"key": "teacher_name",
+							"value": "Rudra Ghosh"
 						}
 					]
 				}
@@ -972,7 +972,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:5000/teacher/list?cluster_name=Sarakki",
+					"raw": "http://localhost:5000/teacher/list?kalika_kendra_id=65",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -985,11 +985,16 @@
 					"query": [
 						{
 							"key": "cluster_name",
-							"value": "Sarakki"
+							"value": "Sarakki",
+							"disabled": true
 						},
 						{
-							"key": "teacher_code",
-							"value": "19SRK087",
+							"key": "kalika_kendra_id",
+							"value": "65"
+						},
+						{
+							"key": "teacher_name",
+							"value": "Rudra Ghosh",
 							"disabled": true
 						}
 					]
@@ -1015,7 +1020,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"teacher_name\": \"Rudra Ghosh\",\r\n    \"kalika_kendra_name\": \"ANEKAL 2\",\r\n    \"cluster_name\": \"Anekal\",\r\n    \"teacher_code\": \"19ANK0100\"\r\n}"
+					"raw": "{\r\n    \"teacher_name\": \"volunteer10\",\r\n    \"kalika_kendra_name\": \"ANEKAL 2\",\r\n    \"cluster_name\": \"Anekal\",\r\n    \"teacher_code\": \"19ANK0100\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/teacher",
@@ -1049,7 +1054,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"teacher_code\": \"19ANK0102\",\r\n    \"isactive\": 1\r\n}"
+					"raw": "{\r\n    \"teacher_code\": \"19ANK0100\",\r\n    \"isactive\": 0\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/teacher",
@@ -1083,7 +1088,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"teacher_name\": \"Rudra Ghosh\"\r\n}"
+					"raw": "{\r\n    \"teacher_code\": \"19ANK0100\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/teacher",
@@ -1416,7 +1421,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/subject?subject_code=MATH&hierarchy=True",
+					"raw": "http://localhost:5000/subject?subject_name=Language",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1428,16 +1433,17 @@
 					"query": [
 						{
 							"key": "subject_name",
-							"value": "Language",
-							"disabled": true
+							"value": "Language"
 						},
 						{
 							"key": "subject_code",
-							"value": "MATH"
+							"value": "MATH",
+							"disabled": true
 						},
 						{
 							"key": "hierarchy",
-							"value": "True"
+							"value": "True",
+							"disabled": true
 						}
 					]
 				}
@@ -1468,7 +1474,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:5000/subject/list?subject_code=MATH",
+					"raw": "http://localhost:5000/subject/list?hierarchy=True",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1486,12 +1492,12 @@
 						},
 						{
 							"key": "subject_code",
-							"value": "MATH"
+							"value": "MATH",
+							"disabled": true
 						},
 						{
 							"key": "hierarchy",
-							"value": "True",
-							"disabled": true
+							"value": "True"
 						}
 					]
 				}
@@ -1515,7 +1521,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:5000/assessment_period?assessment_year=2020",
+					"raw": "http://localhost:5000/assessment_period?assessment_period_id=159",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1526,8 +1532,8 @@
 					],
 					"query": [
 						{
-							"key": "assessment_year",
-							"value": "2020"
+							"key": "assessment_period_id",
+							"value": "159"
 						}
 					]
 				}
@@ -1905,6 +1911,16 @@
 						{
 							"key": "subject_id",
 							"value": "2"
+						},
+						{
+							"key": "skill_id",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "skill_name",
+							"value": "Attentiveness",
+							"disabled": true
 						}
 					]
 				}
@@ -1928,7 +1944,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:5000/assessment_skill/list?subject_id=2",
+					"raw": "http://localhost:5000/assessment_skill/list?subject_name=Language",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -1946,7 +1962,12 @@
 						},
 						{
 							"key": "subject_id",
-							"value": "2"
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "subject_name",
+							"value": "Language"
 						}
 					]
 				}
@@ -2072,7 +2093,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:5000/assessment_result?kalika_kendra_id=6",
+					"raw": "http://localhost:5000/assessment_result?result_id=12",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -2080,78 +2101,6 @@
 					"port": "5000",
 					"path": [
 						"assessment_result"
-					],
-					"query": [
-						{
-							"key": "period_id",
-							"value": "2",
-							"disabled": true
-						},
-						{
-							"key": "subject_name",
-							"value": "Mathematics",
-							"disabled": true
-						},
-						{
-							"key": "skill_name",
-							"value": "Conversation",
-							"disabled": true
-						},
-						{
-							"key": "result_id",
-							"value": "12",
-							"disabled": true
-						},
-						{
-							"key": "cluster_id",
-							"value": "1",
-							"disabled": true
-						},
-						{
-							"key": "kalika_kendra_name",
-							"value": "ANEKAL 1",
-							"disabled": true
-						},
-						{
-							"key": "kalika_kendra_id",
-							"value": "6"
-						},
-						{
-							"key": "cluster_name",
-							"value": "Bellary_new",
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Assessment Result List",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"type": "text",
-						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer {{JWT}}"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:5000/assessment_result/list?result_id=12",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"assessment_result",
-						"list"
 					],
 					"query": [
 						{
@@ -2184,8 +2133,94 @@
 							"disabled": true
 						},
 						{
+							"key": "kalika_kendra_id",
+							"value": "6",
+							"disabled": true
+						},
+						{
 							"key": "cluster_name",
 							"value": "Bellary_new",
+							"disabled": true
+						},
+						{
+							"key": "result_id",
+							"value": "2",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Assessment Result List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{JWT}}"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:5000/assessment_result/list?assessment_period_id=2&subject_name=Mathematics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"assessment_result",
+						"list"
+					],
+					"query": [
+						{
+							"key": "assessment_period_id",
+							"value": "2"
+						},
+						{
+							"key": "subject_name",
+							"value": "Mathematics"
+						},
+						{
+							"key": "assessment_skill_name",
+							"value": "Conversation",
+							"disabled": true
+						},
+						{
+							"key": "result_id",
+							"value": "12",
+							"disabled": true
+						},
+						{
+							"key": "cluster_id",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "kalika_kendra_name",
+							"value": "ANEKAL 1",
+							"disabled": true
+						},
+						{
+							"key": "cluster_name",
+							"value": "Bellary_new",
+							"disabled": true
+						},
+						{
+							"key": "student_id",
+							"value": "12",
+							"disabled": true
+						},
+						{
+							"key": "assessment_category_name",
+							"value": "Speaking",
 							"disabled": true
 						}
 					]
@@ -2245,7 +2280,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"result_id\": 1001,\r\n    \"attempt_id\": 3,\r\n    \"score\": 8\r\n}"
+					"raw": "{\r\n    \"result_id\": 12,\r\n    \"attempt_id\": 3,\r\n    \"score\": 9,\r\n    \"assessment_category_id\": 1\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/assessment_result",

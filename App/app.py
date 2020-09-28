@@ -14,6 +14,7 @@ from models.user_role import UserRoleModel
 from resources.kalika_kendra import KalikaKendra, KalikaKendraList
 from resources.organization import Organization
 from resources.user_role import UserRole
+
 from resources.subject import Subject, SubjectList
 from resources.assessment_period import AssessmentPeriod, AssessmentPeriodList
 from resources.assessment_category import AssessmentCategory, AssessmentCategoryList
@@ -127,7 +128,6 @@ def revoked_token_callback():
 
 api.add_resource(User, '/user')
 api.add_resource(UserList, '/user/list')
-
 api.add_resource(UserRegister, '/register')
 api.add_resource(UserLogin, '/login')
 api.add_resource(Cluster, '/cluster')
