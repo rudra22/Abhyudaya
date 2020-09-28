@@ -165,7 +165,31 @@ class AssessmentResultModel(db.Model):
             if skill:
                 skill_id = skill.id
                 filter_str = filter_str + '.filter_by(skill_id="' + str(skill_id) + '")'
-
+        if 'cluster_id' in kwargs.keys():
+            payload = {"cluster_id": kwargs["cluster_id"]}
+            students = StudentModel.find_by_student_by_any(**payload)
+            if students:
+                student_ids = [s.id for s in students]
+                # print(student_ids)
+                filter_str = filter_str + '.filter(cls.student_id.in_(' + str(student_ids) + '))'
+        if 'kalika_kendra_id' in kwargs.keys():
+            payload = {"kalika_kendra_id": kwargs["kalika_kendra_id"]}
+            students = StudentModel.find_by_student_by_any(**payload)
+            if students:
+                student_ids = [s.id for s in students]
+                filter_str = filter_str + '.filter(cls.student_id.in_(' + str(student_ids) + '))'
+        if 'cluster_name' in kwargs.keys():
+            payload = {"cluster_name": kwargs["cluster_name"]}
+            students = StudentModel.find_by_student_by_any(**payload)
+            if students:
+                student_ids = [s.id for s in students]
+                filter_str = filter_str + '.filter(cls.student_id.in_(' + str(student_ids) + '))'
+        if 'kalika_kendra_name' in kwargs.keys():
+            payload = {"kalika_kendra_name": kwargs["kalika_kendra_name"]}
+            students = StudentModel.find_by_student_by_any(**payload)
+            if students:
+                student_ids = [s.id for s in students]
+                filter_str = filter_str + '.filter(cls.student_id.in_(' + str(student_ids) + '))'
         filter_str = filter_str + '.all()'
         return eval(filter_str)
 
